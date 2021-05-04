@@ -34,8 +34,32 @@ CSV and TSV are text files with tabular data. Columns are either separated with 
 
 ### Data fields
 
+The output file contains the following columns:
+
+#### Names
 __seqName__ provides the name of the sequence, as indicated in the input.
 __clade__: The Nextstrain designation of the SARS-CoV-2 sample, with the year and a letter given - for example, 19A or 20B. See [this blog entry](https://nextstrain.org/blog/2021-01-06-updated-SARS-CoV-2-clade-naming) for more information.
+
+#### Sequence quality and statistics
+__qc.overallScore__ and __qc.overallStatus__ indicate the overall sequence quality.
+
+__totalPcrPrimerChanges__, __totalGaps__, __totalInsertions__, __totalMissing__, __totalMutations__ and __totalNonACGTNs__ are rather self-explanatory numbers. Note that the use of non-standard PCR primers are annotated in the field __pcrPrimerChanges__.
+
+#### Mutations at the nucleotide level
+
+The fields __substitutions__, __deletions__ and __insertions__ are self-evident. They indicate the mutations - in respect to the reference sequence - in your supplied FASTA sequence.
+
+__missing__ and __nonACGTNs__, again, refer to sequence quality. <!-- not sure, come back to this problem later -->
+
+#### Changes in Amino Acids
+
+__aaSubstitutions__ indicate the changed amino acids, together with the Open Reading Frame (ORF) in which the mutation occurred. __totalAminoacidSubstitutions__ give the total number of changed amino acids.
+
+__aaDeletions__ and __totalAminoacidDeletions__ are self-explanatory in this context.
+
+#### Alignment Diagnostics
+
+__alignmentStart__ and __alignmentEnd__ <!-- unclear - if the reference sequence is NNNNNNNNN, and my supplied sequence is longer, what will happen? The other way round, I'd understand this... -->
 
 ## JSON output
 In contrast to CSV/TSV, the JSON file contains the complete results. There are several tools and programming languages which can read the JSON files.
