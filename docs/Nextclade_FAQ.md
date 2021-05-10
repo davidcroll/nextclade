@@ -61,35 +61,29 @@ __aaDeletions__ and __totalAminoacidDeletions__ are self-explanatory in this con
 
 #### Alignment Diagnostics
 
-__alignmentStart__ and __alignmentEnd__ <!-- unclear - if the reference sequence is NNNNNNNNN, and my supplied sequence is longer, what will happen? The other way round, I'd understand this... -->
+<!-- unclear - if the reference sequence is NNNNNNNNN, and my supplied sequence is longer, what will happen? The other way round, I'd understand this... -->
+__alignmentStart__ and __alignmentEnd__
 
 ## JSON output
 In contrast to CSV/TSV, the JSON file contains the complete results. There are several tools and programming languages which can read the JSON files.
 
 
 ## Auspice tree output (JSON-auspice)
-If you choose this format, you can further analyze and visualize the results on auspice.us.
-
+If you choose this format, you can further analyze and visualize the results on [auspice.us](http://www.auspice.us).
 
 
 # Other Issues
-
-
-
+<!-- think about what to do about this "Other Issues" - seems to be a remnant of earlier editing -->
 
 ## Alignment and mutations
 
 ## User’s Guide
 
-Add user's giude prio:high t:feat
-#128 opened on Jul 17, 2020 by ivan-aksamentov
-Add help tips help wanted prio:high t:feat
-#129 opened on Jul 17, 2020 by ivan-aksamentov
-
+<!-- insert URL of that guide - is there already a published version? -->
+A comprehensive user's guide can be found at [](), which explains the local and the browser version of nextclade in much more detail. 
 
 Add contact/feedback form good first issue help wanted t:feat
 #82 opened on Jul 3, 2020 by ivan-aksamentov
-
 
 ## Is there a translation of Nextclade?
 At the moment, no. We’re welcoming people who would contribute their time and skills for translations. See this issue on our GitHub site: https://github.com/nextstrain/nextclade/issues/37
