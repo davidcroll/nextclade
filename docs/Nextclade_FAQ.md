@@ -1,5 +1,20 @@
 # General
 
+
+<center><h1>Notes can be seen in the source code as HTML comments</h1></center>
+
+
+
+<!-- 
+
+The user-uploaded genome is often called "supplied sequence" in this text. This could be confusing, as the reference genome is also a "supplied" one. Maybe find a way to clear up the language.
+
+In other respects, it also needs a bit of clean-up - I don't always write clean English.
+
+-->
+
+
+
 ## What does nextclade do? What do I need to know?
 Nextclade allows you to analyze SARS-CoV-2 sequences in the web browser. It will align your sequence data to a reference genome, call mutations relative to that reference, and place your sequences on a SARS-CoV-2 phylogeny. It also reports clade assignments and quality of your sequence data.
 
@@ -8,10 +23,15 @@ No, it does not. All steps - sequence alignment, variant calling, clade assignme
 
 ## What do the QC indicators mean?
 Nextclade calculates several metrics that indicate sequence quality. We currently use four such metrics:
+
   - **Missing data**: The amount of unknown bases (`N`).
+  
   - **Mixed sites**: The amount of bases that are not `ACTG-N`, for example `R` (for `A or G`),`Y` (for `C or T`), `K` for `G or T`) and so on. `-` is a gap in the sequence, and `N` denotes any base.
+  
   - **Private mutations**: The number of mutations that map to the terminal branch leading to the sequence after attachment to the tree. Many private mutation either indicate many sequencing errors, or an unusual variant without close relatives in the tree.
+  
   - **SNP clusters**: Several mutations in a short stretch can indicate assembly problems. We calculate such SNP clusters using only the private mutations.
+
 
 The rules on missing data, private mutations, and SNP clusters mimic the exclusion criteria used by the nextstrain augur tool.
 
@@ -19,15 +39,21 @@ The rules on missing data, private mutations, and SNP clusters mimic the exclusi
 The nextstrain team maintains a discussion forum at discussion.nextstrain.org. You can post your questions there. For bugs in the software or feature requests, please open an issue on  [GitHub](https://github.com/nextstrain/nextclade/issues).
 
 ## Can I use my own tree?
+
 Yes, you can specify your own tree, reference sequence, and quality control settings in the advanced mode. Your phylogenetic tree can be generated using the `augur` pipeline.
 
 ## Is Nextclade available for other pathogens and microorganisms, too?
+
 Nextclade works for other pathogens, but you have to specify your own reference sequences, trees, and annotations. Only SARS-CoV-2 data is currently provided as a default. We plan to provide support for other pathogens in the future.
 
 # Output files
 
+Depending on your needs and post-processing, you can download the result files either as CSV/TSV, JSON or auspice-JSON files. For a quick glances at the results, CSV/TSV is usually the best choice.
+
 ## CSV/TSV outputs
+
 CSV and TSV are text files with tabular data. Columns are either separated with commas or semicolons (CSV) or tabs (TSV). CSV and TSV are compatible with any spreadsheet application. To use these files, make sure to select:
+
 * the proper text encoding (UTF-8 and ISO-8859-1 are the most common)
 * the kind of separator - comma, semicolon, tab...
 * and how strings (character values) are indicated. Usually, strings are delimited with "..." (double quotes).
@@ -38,51 +64,111 @@ Nextclade's CSV files are semicolon-separated. Selecting `,` as the separator wi
 
 The output file contains the following columns:
 
-#### Names
-__seqName__ provides the name of the sequence, as indicated in the input.
-__clade__: The Nextstrain designation of the SARS-CoV-2 sample, with the year and a letter given - for example, 19A or 20B. See [this blog entry](https://nextstrain.org/blog/2021-01-06-updated-SARS-CoV-2-clade-naming) for more information.
+* Names
 
-#### Sequence quality and statistics
-__qc.overallScore__ and __qc.overallStatus__ indicate the overall sequence quality.
+    * __seqName__ provides the name of the sequence, as indicated in the input.
+    * __clade__: The Nextstrain designation of the SARS-CoV-2 sample, with the year and a letter given - for example, 19A or 20B. See [this blog entry](https://nextstrain.org/blog/2021-01-06-updated-SARS-CoV-2-clade-naming) for more information.
 
-__totalPcrPrimerChanges__, __totalGaps__, __totalInsertions__, __totalMissing__, __totalMutations__ and __totalNonACGTNs__ are rather self-explanatory numbers. Note that the use of non-standard PCR primers are annotated in the field __pcrPrimerChanges__.
+* Sequence quality and statistics
 
-#### Mutations at the nucleotide level
+    * __qc.overallScore__ and __qc.overallStatus__ indicate the overall sequence quality.
+    * __totalPcrPrimerChanges__, __totalGaps__, __totalInsertions__, __totalMissing__, __totalMutations__ and __totalNonACGTNs__ are rather self-explanatory numbers. Note that the use of non-standard PCR primers are annotated in the field __pcrPrimerChanges__.
 
-The fields __substitutions__, __deletions__ and __insertions__ are self-evident. They indicate the mutations - in respect to the reference sequence - in your supplied FASTA sequence.
+* Mutations at the nucleotide level
 
-__missing__ and __nonACGTNs__, again, refer to sequence quality. <!-- not sure, come back to this problem later -->
+    * The fields __substitutions__, __deletions__ and __insertions__ are self-explanatory. They indicate the mutations - in respect to the reference sequence - in your supplied FASTA sequence.
+    * __missing__ and __nonACGTNs__, again, refer to sequence quality. <!-- not sure, come back to this problem later -->
 
-#### Changes in Amino Acids
+* Changes in Amino Acids
 
-__aaSubstitutions__ indicate the changed amino acids, together with the Open Reading Frame (ORF) in which the mutation occurred. __totalAminoacidSubstitutions__ give the total number of changed amino acids.
+    * __aaSubstitutions__ indicate the changed amino acids, together with the Open Reading Frame (ORF) in which the mutation occurred. __totalAminoacidSubstitutions__ give the total number of changed amino acids.
+    * __aaDeletions__ and __totalAminoacidDeletions__ are self-explanatory in this context.
 
-__aaDeletions__ and __totalAminoacidDeletions__ are self-explanatory in this context.
+* Alignment Diagnostics
 
-#### Alignment Diagnostics
+    * __alignmentStart__ and __alignmentEnd__ indicate where your sequence starts and where it ends, in relation to the reference genome. For example:
 
-<!-- unclear - if the reference sequence is NNNNNNNNN, and my supplied sequence is longer, what will happen? The other way round, I would understand this: Where, on the reference genome, is the begin of my supplied sequence? -->
-__alignmentStart__ and __alignmentEnd__ indicate where your sequence starts and where it ends, in relation to the reference genome.
+<!-- Markdown cannot indent; therefore I'm using &nbsp; -->
 
-For example,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ```reference sequence: AGCTCTGCT```
 
-<!-- Putting the backticks on the same line as --- leads to a formatting error -->
-```
-reference sequence: AGCTCTGCT 
-your sequence:      -GCTCT---
-``` 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ```your sequence:      -GCTCT---```
 
-would result in ```alignmentStart = 2``` and ```alignmentStart = 6```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;would result in ```alignmentStart = 2``` and ```alignmentStart = 6```.
 
 ## JSON output
-In contrast to CSV/TSV, the JSON file contains the complete results. There are several tools and programming languages which can read the JSON files.
+
+In contrast to CSV/TSV, the JSON file contains the complete results. There are several tools that can read JSON files. Most modern programming languages offer methods for reading and manipulating JSON files.
+
+For easier reference, this summary follows the actual JSON tree structure. The file contains, within ```[square brackets]```, the results stemming from the particular sequences.
+
+
+
+1. __seqName__ designation of the sequence
+2. __substitutions__ changes in the nucleotide or amino acid sequence
+    1. __pos__ denotes the position where the supplied nucleotide sequence differs from the reference one
+    2. __refNuc__ is the nucleotide at this position
+    3. __queryNuc__ is the corresponding nucleotide from the supplied sequence
+    4. __aaSubstitutions__ if empty, the mutation did not result in changed amino acid.
+    5. __pcrPrimerChanges__ Indicates whether a possible amino acid substitution was missed if a non-standard PCR primer was used. If non-empty, the non-standard PCR primer is indicated. <!-- needs to be checked with Richard --> 
+    
+    
+3. __totalMutations__ number of the mutations compared to the reference sequence
+4. __totalInsertions__ number of insertion mutations
+5. __deletions__ number of insertion mutations
+6. __totalGaps__ number of gaps in the supplied sequence, in regard to the complete reference genome
+7. __missing__ <!-- check with Richard - how do the missing nucleotides compare to nucleotide deletions? Or am I understanding it the wrong way? -->
+8. __totalMissing__ <!-- see the line above -->
+9. __nonACGTNs__ indicate non-standard nucleotides
+    1. __begin__ the position where these nucleotides have occurred
+    2. __nuc__ contains the IUPAC designation of any non-standard nucleotides. As mentioned before, these are often sequencing errors.
+    3. __end__ the sequence of non-standard nucleotides end before this position
+10. __aaSubstitutions__
+    1. __refAA__ is the amino acid belonging to the reference genome
+    2. __queryAA__, the amino acid of the supplied sequence
+    3. __codon__ the number of the codon affected by the mutation
+    4. __gene__ the affected gene, for example ```S``` for the spike protein
+    5. __nucRange__ with the two nucleotide numbers, indicating the __begin__ and the __end__ of the codon
+    6. __refCodon__ and
+    7. __queryCodon__, the respective nucleotides of the reference sequence and the supplied one.
+    
+11. __totalAminoacidSubstitutions__,
+12. __aaDeletions__ and
+13. __totalAminoacidDeletions__ are quite self-explanatory.
+14. __alignmentStart__ and
+15. __alignmentEnd__ mark where, in respect to the reference genome, begins/ends your uploaded genome.
+16. __alignmentScore__ represents the quality of the alignement. <!-- maybe mention the metric? Is it the Levenshtein or Hamming distance? -->
+17. __pcrPrimerChanges__ a list of PCR primer changes <!-- check whether this explanation jibes with the one in 2.5. - look up, in the JSON file, what the difference is -->
+18. __clade__ reports the Nextclade designation of the strain
+19. __qc__ is the overall quality measure of this sequence alignment
+20. __nearestTreeNodeId__ is the number of the node where your uploaded strain attaches to the extant 
+21. __errors__ reports any errors that have occurred in alignement, or reporting the mutations.
+
+
+
+
+<!-- __alignmentScore__ seems to be missing in the CSV/TSV descriptions
+
+__nearestTreeNodeId__ too
+
+__refAA__ too (is part of __aaSubstitutions__)
+
+--> 
+
+
+
+
+
 
 
 ## Auspice tree output (JSON-auspice)
+
 If you choose this format, you can further analyze and visualize the results on [auspice.us](http://www.auspice.us).
 
 
 # Other Issues
+
 <!-- think about what to do about this "Other Issues" - seems to be a remnant of earlier editing -->
 
 ## Alignment and mutations
@@ -96,6 +182,7 @@ Add contact/feedback form good first issue help wanted t:feat
 #82 opened on Jul 3, 2020 by ivan-aksamentov
 
 ## Is there a translation of Nextclade?
+
 At the moment, no. We’re welcoming people who would contribute their time and skills for translations. See this issue on our GitHub site: https://github.com/nextstrain/nextclade/issues/37
 
 
