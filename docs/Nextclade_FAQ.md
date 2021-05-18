@@ -28,7 +28,7 @@ Nextclade calculates several metrics that indicate sequence quality. We currentl
   
   - **Mixed sites**: The amount of bases that are not `ACTG-N`, for example `R` (for `A or G`),`Y` (for `C or T`), `K` for `G or T`) and so on. `-` is a gap in the sequence, and `N` denotes any base.
   
-  - **Private mutations**: The number of mutations that map to the terminal branch leading to the sequence after attachment to the tree. Many private mutation either indicate many sequencing errors, or an unusual variant without close relatives in the tree.
+  - **Private mutations**: The number of mutations that map to the terminal branch leading to the sequence after attachment to the tree. Many private mutations either indicate a lot of sequencing errors, or an unusual variant without close relatives in the tree.
   
   - **SNP clusters**: Several mutations in a short stretch can indicate assembly problems. We calculate such SNP clusters using only the private mutations.
 
@@ -207,11 +207,13 @@ The code is at https://github.com/nextstrain/nextclade/tree/master/packages/web/
 
 ### Is there a global quality indicator?
 
+Yes, there is a global quality indicator. Hover over any of the four quality benchmark symbols (N, M, P or C)
 
 Add global quality control indicator good first issue help wanted t:feat
 #61 opened on Jul 1, 2020 by ivan-aksamentov
 
 ### Are the mutations linked to nextstrain.org?
+
 
 Link mutations to nextstrain.org good first issue help wanted t:feat
 #86 opened on Jul 3, 2020 by ivan-aksamentov
